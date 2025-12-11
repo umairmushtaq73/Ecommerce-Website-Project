@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Products - ShopEasy{% endblock %}
+
+{% block content %}
+
+<div class="products-container">
+
+    <h1 class="page-title">All Products</h1>
+
+    <div class="product-grid">
+
+        {% for product in products %}
+        <div class="product-card">
+
+            <div class="product-image-wrapper">
+                <img src="{{ product.image }}"
+                     alt="{{ product.name }}"
+                     onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+            </div>
+
+            <div class="product-info">
+                <span class="category">{{ product.category }}</span>
+
+                <h3 class="product-title">{{ product.name }}</h3>
+
+                <p class="product-description">
+                    {{ product.description|truncate(80) }}
+                </p>
+
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span>({{ (product.id * 7)|int }})</span>
+                </div>
+
+                <div class="price-row">
+                    <span class="price">${{ "%.2f"|format(product.price) }}</span>
+
+                    {% if product.price > 100 %}
+                    <span class="old-price">${{ "%.2f"|format(product.price * 1.15) }}</span>
+                    {% endif %}
+                </div>
+
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="add-btn">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </a>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<style>
+/* PAGE WRAPPER */
+.products-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem 1rem 4rem;
+}
+
+/* TITLE */
+.page-title {
+    font-size: 2.3rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    color: #111;
+}
+
+/* PRODUCT GRID */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* CARD */
+.product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    border: 1px solid #e5e7eb;
+    transition: .25s;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+}
+
+/* IMAGE */
+.product-image-wrapper {
+    height: 220px;
+    overflow: hidden;
+}
+
+.product-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* INFO */
+.product-info {
+    padding: 1.2rem;
+}
+
+.category {
+    font-size: 0.8rem;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.product-title {
+    margin-top: .4rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+/* DESCRIPTION */
+.product-description {
+    margin: .5rem 0;
+    color: #555;
+    font-size: .9rem;
+}
+
+/* RATING */
+.rating {
+    color: #fbbf24;
+    margin: .4rem 0;
+}
+.rating span {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* PRICE */
+.price-row {
+    margin-top: .4rem;
+    margin-bottom: .8rem;
+}
+.price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111;
+}
+.old-price {
+    margin-left: 8px;
+    font-size: .9rem;
+    color: #888;
+    text-decoration: line-through;
+}
+
+/* BUTTON */
+.add-btn {
+    display: block;
+    width: 100%;
+    background: #f59e0b;
+    color: white;
+    padding: .75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    transition: .25s;
+}
+.add-btn:hover {
+    background: #d97706;
+}
+</style>
+
+{% endblock %}

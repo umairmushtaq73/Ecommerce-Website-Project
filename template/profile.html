@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - ShopEasy{% endblock %}
+
+{% block content %}
+
+<div class="ui container" style="margin-top: 30px;">
+    <div class="ui grid">
+
+        <!-- Sidebar -->
+        <div class="four wide column">
+            <div class="ui vertical fluid tabular menu profile-sidebar">
+
+                <div class="item user-summary">
+                    <img class="ui small circular image"
+                         src="https://semantic-ui.com/images/avatar2/large/kristy.png">
+                    <h3>{{ user.name }}</h3>
+                    <p>{{ user.email }}</p>
+                </div>
+
+                <a class="active item">
+                    <i class="user icon"></i> Profile
+                </a>
+
+                <a href="{{ url_for('view_orders') }}" class="item">
+                    <i class="shopping bag icon"></i>
+                    My Orders
+                    <div class="ui blue label">{{ orders|length }}</div>
+                </a>
+
+                <a href="{{ url_for('view_cart') }}" class="item">
+                    <i class="shopping cart icon"></i>
+                    Shopping Cart
+                    {% if session.get('cart') %}
+                    <div class="ui red circular label">{{ session['cart']|length }}</div>
+                    {% endif %}
+                </a>
+
+                <a href="{{ url_for('logout') }}" class="item">
+                    <i class="sign out icon"></i> Logout
+                </a>
+
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="twelve wide column">
+
+            <h1 class="ui header">
+                <i class="user circle icon"></i>
+                <div class="content">
+                    My Profile
+                    <div class="sub header">Manage your account details</div>
+                </div>
+            </h1>
+
+            <!-- Profile Information -->
+            <div class="ui segment">
+                <div class="ui two column stackable grid">
+
+                    <div class="column">
+                        <h3 class="ui dividing header">Account Information</h3>
+
+                        <div class="ui list">
+                            <div class="item">
+                                <i class="user icon"></i>
+                                <div class="content">
+                                    <div class="header">Name</div>
+                                    <div class="description">{{ user.name }}</div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <i class="envelope icon"></i>
+                                <div class="content">
+                                    <div class="header">Email</div>
+                                    <div class="description">{{ user.email }}</div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <i class="calendar icon"></i>
+                                <div class="content">
+                                    <div class="header">Member Since</div>
+                                    <div class="description">Date Unknown</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="column">
+                        <h3 class="ui dividing header">Quick Stats</h3>
+
+                        <div class="ui statistics">
+                            <div class="statistic">
+                                <div class="value">{{ orders|length }}</div>
+                                <div class="label">Orders</div>
+                            </div>
+
+                            <div class="statistic">
+                                <div class="value">
+                                    {% if session.get('cart') %}{{ session['cart']|length }}{% else %}0{% endif %}
+                                </div>
+                                <div class="label">Cart Items</div>
+                            </div>
+                        </div>
+
+                        <div class="ui divider"></div>
+
+                        <a href="{{ url_for('products') }}" class="ui primary button">
+                            <i class="shopping icon"></i> Continue Shopping
+                        </a>
+
+                        <a href="{{ url_for('view_orders') }}" class="ui button">
+                            <i class="history icon"></i> View Orders
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <h3 class="ui header">Recent Orders</h3>
+
+            {% if orders %}
+            <div class="ui relaxed divided list">
+
+                {% for order in orders[:3] %}
+                <div class="item">
+                    <i class="large shopping bag middle aligned icon"></i>
+                    <div class="content">
+                        <a class="header">Order #{{ order.order_id }}</a>
+                        <div class="description">
+                            {{ order.date }} • 
+                            Total: ${{ "%.2f"|format(order.total) }} • 
+                            Status:
+                            <span class="ui label 
+                                {% if order.status == 'Delivered' %}green
+                                {% elif order.status == 'Processing' %}yellow
+                                {% else %}blue{% endif %}">
+                                {{ order.status }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            {% if orders|length > 3 %}
+            <div class="ui center aligned basic segment">
+                <a href="{{ url_for('view_orders') }}" class="ui button">View All Orders</a>
+            </div>
+            {% endif %}
+
+            {% else %}
+            <div class="ui placeholder segment">
+                <div class="ui icon header">
+                    <i class="shopping bag icon"></i>
+                    No Orders Yet
+                </div>
+                <a href="{{ url_for('products') }}" class="ui primary button">
+                    Start Shopping
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.profile-sidebar .user-summary {
+    text-align: center;
+    padding-bottom: 1rem;
+}
+.profile-sidebar .user-summary h3 {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+</style>
+
+{% endblock %}

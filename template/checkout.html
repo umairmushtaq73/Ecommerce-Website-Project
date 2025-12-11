@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - ShopEasy{% endblock %}
+
+{% block content %}
+
+<div class="checkout-section">
+    <h2 class="section-title">
+        <i class="fas fa-credit-card"></i> Checkout
+    </h2>
+
+    <div class="checkout-grid">
+
+        <!-- ORDER SUMMARY -->
+        <div class="order-summary-card">
+            <h3 class="card-title">
+                <i class="fas fa-receipt"></i> Order Summary
+            </h3>
+
+            <div class="items-list">
+                {% for item in cart %}
+                <div class="item-row">
+                    <div>
+                        <strong>{{ item.name }}</strong>
+                        <p class="item-sub">
+                            ${{ "%.2f"|format(item.price) }} × {{ item.quantity }}
+                        </p>
+                    </div>
+                    <div class="item-total">
+                        ${{ "%.2f"|format(item.price * item.quantity) }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>${{ "%.2f"|format(total_price) }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax (8%)</span>
+                    <span>${{ "%.2f"|format(total_price * 0.08) }}</span>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>${{ "%.2f"|format(total_price * 1.08) }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SHIPPING FORM -->
+        <div class="shipping-form-card">
+            <h3 class="card-title">
+                <i class="fas fa-truck"></i> Shipping Information
+            </h3>
+
+            <form method="POST">
+
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Shipping Address</label>
+                    <textarea name="address" rows="3" class="form-control" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" name="phone" class="form-control" required>
+                </div>
+
+                <button class="btn btn-success place-order-btn">
+                    <i class="fas fa-lock"></i> Place Order Securely
+                </button>
+
+                <p class="secure-note">
+                    <i class="fas fa-shield-alt"></i> Your payment information is secure
+                </p>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<style>
+.checkout-section {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+/* Cards */
+.order-summary-card,
+.shipping-form-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.card-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+}
+
+/* Items */
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.item-sub {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Summary Box */
+.summary-box {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    font-size: 1rem;
+}
+
+.summary-row.total {
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-top: 2px solid #ddd;
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.place-order-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+
+.secure-note {
+    text-align: center;
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+{% endblock %}

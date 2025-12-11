@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Register - ShopEasy{% endblock %}
+
+{% block content %}
+
+<div class="ui middle aligned center aligned grid" style="min-height: 70vh; margin-top: 40px;">
+    <div class="column" style="max-width: 450px;">
+
+        <h2 class="ui teal image header">
+            <i class="user plus icon"></i>
+            <div class="content">Create Your Account</div>
+        </h2>
+
+        <!-- Registration Form -->
+        <form class="ui large form" method="POST" action="{{ url_for('register') }}">
+
+            <div class="ui stacked segment">
+
+                <!-- Name -->
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="name" placeholder="Full Name" required>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="envelope icon"></i>
+                        <input type="email" name="email" placeholder="Email Address" required>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="ui fluid large teal submit button">
+                    Register
+                </button>
+
+            </div>
+
+            <div class="ui error message"></div>
+        </form>
+
+        <!-- Login Link -->
+        <div class="ui message">
+            Already have an account?
+            <a href="{{ url_for('login') }}">Login</a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .ui.middle.aligned.grid {
+        margin-top: 50px;
+    }
+
+    .ui.form .field > label {
+        text-align: left;
+    }
+</style>
+
+{% endblock %}

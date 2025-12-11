@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Add Product - ShopEasy{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+    <h1 class="form-title">
+        <i class="fas fa-plus-circle"></i> Add New Product
+    </h1>
+
+    <form method="POST" class="product-form">
+
+        <div class="form-group">
+            <label class="form-label">
+                <i class="fas fa-tag"></i> Product Name
+            </label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">
+                <i class="fas fa-align-left"></i> Description
+            </label>
+            <textarea name="description" class="form-control form-textarea" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">
+                <i class="fas fa-dollar-sign"></i> Price ($)
+            </label>
+            <input type="number" name="price" class="form-control" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">
+                <i class="fas fa-box"></i> Quantity
+            </label>
+            <input type="number" name="quantity" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">
+                <i class="fas fa-list"></i> Category
+            </label>
+            <select name="category" class="form-control" required>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Books">Books</option>
+                <option value="Home">Home</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">
+                <i class="fas fa-image"></i> Image URL (optional)
+            </label>
+            <input type="text" name="image" class="form-control"
+                   placeholder="https://example.com/product.jpg">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Add Product
+            </button>
+
+            <a href="{{ url_for('products') }}" class="btn btn-outline">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
+
+    </form>
+</div>
+
+<style>
+.form-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.form-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.form-textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-success {
+    background: #27ae60;
+    color: white;
+}
+
+.btn-success:hover { background: #219150; }
+
+.btn-outline {
+    border: 2px solid #555;
+    color: #555;
+}
+
+.btn-outline:hover {
+    background: #555;
+    color: white;
+}
+</style>
+
+{% endblock %}

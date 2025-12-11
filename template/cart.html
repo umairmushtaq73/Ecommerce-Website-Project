@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - ShopEasy{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+
+    <h1 class="cart-title">🛒 Shopping Cart</h1>
+    <p class="cart-subtitle">Review your items and proceed to checkout</p>
+
+    {% if not cart %}
+    <div class="empty-cart-box">
+        <i class="fas fa-shopping-cart empty-cart-icon"></i>
+        <h2>Your cart is empty</h2>
+        <p>Add some products to your cart to see them here.</p>
+
+        <a href="{{ url_for('products') }}" class="btn-primary">
+            Continue Shopping
+        </a>
+    </div>
+
+    {% else %}
+    <div class="cart-grid">
+
+        <!-- Cart items -->
+        <div class="cart-items">
+            {% for item in cart %}
+            <div class="cart-item-card">
+                <img src="{{ item.image }}" class="cart-item-img">
+
+                <div class="cart-item-info">
+                    <h3>{{ item.name }}</h3>
+                    <p class="item-price">${{ "%.2f"|format(item.price) }}</p>
+
+                    <form method="POST" action="{{ url_for('update_cart', product_id=item.id) }}">
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                        <button class="update-btn">Update</button>
+                    </form>
+
+                    <a class="remove-btn" href="{{ url_for('remove_from_cart', product_id=item.id) }}">Remove</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Summary -->
+        <div class="cart-summary">
+            <h3>Order Summary</h3>
+
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <span>${{ "%.2f"|format(total_price) }}</span>
+            </div>
+
+            <div class="summary-line">
+                <span>Estimated Tax</span>
+                <span>${{ "%.2f"|format(total_price * 0.08) }}</span>
+            </div>
+
+            <div class="summary-total">
+                <strong>Total</strong>
+                <strong>${{ "%.2f"|format(total_price + (total_price * 0.08)) }}</strong>
+            </div>
+
+            <a href="{{ url_for('checkout') }}" class="checkout-btn">
+                Proceed to Checkout
+            </a>
+        </div>
+
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.cart-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem;
+}
+
+.cart-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.cart-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.empty-cart-box {
+    text-align: center;
+    padding: 3rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    max-width: 500px;
+    margin: auto;
+}
+
+.empty-cart-icon {
+    font-size: 4rem;
+    color: #bbb;
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #ff9800;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+.cart-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.cart-item-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.cart-item-img {
+    width: 120px;
+    border-radius: 8px;
+}
+
+.cart-item-info h3 {
+    margin-bottom: 0.5rem;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #e91e63;
+}
+
+.update-btn,
+.remove-btn {
+    display: inline-block;
+    margin-top: 0.5rem;
+    background: #2196f3;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.remove-btn {
+    background: #e91e63;
+}
+
+.cart-summary {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    color: #444;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 2px solid #eee;
+    font-size: 1.2rem;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    background: #4caf50;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 1.5rem;
+    font-weight: bold;
+}
+</style>
+{% endblock %}

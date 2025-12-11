@@ -1,0 +1,98 @@
+/* RESET + BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    margin-top: 80px !important; /* Prevent navbar overlap */
+}
+
+/* ================================================
+   SEMANTIC UI NAVBAR FIXES
+   ================================================ */
+
+/* Force navbar text to show */
+.ui.menu .item,
+.ui.menu .item i.icon,
+.ui.menu .dropdown.item {
+    color: white !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Top fixed menu background */
+.ui.top.fixed.menu {
+    background-color: #1b1c1d !important;
+    border: none !important;
+}
+
+/* Fix right menu being hidden */
+.ui.menu .right.menu {
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Dropdown visibility fix */
+.ui.menu .ui.dropdown .menu {
+    background: #fff !important;
+}
+.ui.menu .ui.dropdown .menu .item {
+    color: #000 !important;
+}
+
+/* Cart badge fix */
+.floating.ui.red.mini.circular.label,
+.ui.red.circular.mini.label {
+    margin-left: 5px;
+}
+
+/* ================================================
+   FOOTER
+   ================================================ */
+
+footer {
+    background: #2c3e50;
+    color: white;
+    text-align: center;     /* already present */
+    padding: 2rem;
+    margin-top: 3rem;
+    display: flex;          /* add this */
+    justify-content: center;/* add this */
+}
+
+
+/* ================================================
+   GENERAL RESPONSIVE FIXES
+   ================================================ */
+
+@media (max-width: 768px) {
+    body {
+        margin-top: 100px !important;
+    }
+}
+
+/* Ensure navbar items don’t collapse */
+.ui.menu > .item {
+    flex: 0 0 auto !important;
+}
+
+.ui.menu {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+}
+
+.ui.menu .right.menu {
+    margin-left: auto !important;
+    white-space: nowrap !important;
+}
+
+/* Force white color on navbar text */
+.ui.top.fixed.menu .item {
+    color: white !important;
+}
