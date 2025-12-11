@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block title %}Home - ShopEasy{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Premium Shopping Experience</h1>
+        <p>Discover curated collections of quality products at unbeatable prices.</p>
+        <a href="{{ url_for('products') }}" class="hero-btn">
+            <i class="fas fa-shopping-bag"></i> Shop Now
+        </a>
+    </div>
+</section>
+
+
+<!-- FEATURED PRODUCTS -->
+<section class="container">
+    <div class="section-header">
+        <h2>Featured Products</h2>
+        <a href="{{ url_for('products') }}">View All →</a>
+    </div>
+
+    <div class="product-grid">
+        {% for product in products[:4] %}
+        <div class="product-card">
+            <img src="{{ product.image }}" alt="{{ product.name }}"
+                 onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+
+            <div class="product-info">
+                <span class="category">{{ product.category }}</span>
+
+                <h3>{{ product.name }}</h3>
+
+                <p>{{ product.description|truncate(80) }}</p>
+
+                <div class="price-row">
+                    <span class="price">${{ "%.2f"|format(product.price) }}</span>
+                </div>
+
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn-add">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+<!-- CATEGORIES -->
+<section class="container categories">
+    <h2>Shop by Category</h2>
+
+    <div class="category-grid">
+
+        <a href="{{ url_for('products') }}?category=Electronics" class="category-box">
+            <i class="fas fa-laptop"></i>
+            <h3>Electronics</h3>
+            <p>Latest gadgets & tech</p>
+        </a>
+
+        <a href="{{ url_for('products') }}?category=Clothing" class="category-box">
+            <i class="fas fa-tshirt"></i>
+            <h3>Clothing</h3>
+            <p>Fashion & apparel</p>
+        </a>
+
+        <a href="{{ url_for('products') }}?category=Books" class="category-box">
+            <i class="fas fa-book"></i>
+            <h3>Books</h3>
+            <p>Knowledge & literature</p>
+        </a>
+
+        <a href="{{ url_for('products') }}?category=Home" class="category-box">
+            <i class="fas fa-home"></i>
+            <h3>Home</h3>
+            <p>Furniture & decor</p>
+        </a>
+
+    </div>
+</section>
+
+
+<!-- VALUE PROPS -->
+<section class="value-section">
+
+    <div class="value-box">
+        <i class="fas fa-shield-alt"></i>
+        <h3>Secure Payment</h3>
+        <p>100% secure checkout with SSL</p>
+    </div>
+
+    <div class="value-box">
+        <i class="fas fa-shipping-fast"></i>
+        <h3>Fast Delivery</h3>
+        <p>Get your items within 24–48 hours</p>
+    </div>
+
+    <div class="value-box">
+        <i class="fas fa-undo-alt"></i>
+        <h3>Easy Returns</h3>
+        <p>30-day return policy</p>
+    </div>
+
+    <div class="value-box">
+        <i class="fas fa-headset"></i>
+        <h3>24/7 Support</h3>
+        <p>We’re here to help anytime</p>
+    </div>
+
+</section>
+
+
+<style>
+/* --- HERO --- */
+.hero {
+    background: linear-gradient(135deg, #4f46e5, #6d28d9);
+    color: white;
+    padding: 4rem 1rem;
+    text-align: center;
+    border-radius: 0 0 20px 20px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.hero-btn {
+    display: inline-block;
+    background: #fbbf24;
+    padding: 0.8rem 2rem;
+    border-radius: 10px;
+    color: black;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.hero-btn:hover {
+    background: #f59e0b;
+}
+
+/* --- CONTAINER --- */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem 1rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+/* --- PRODUCT GRID --- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.8rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.category {
+    font-size: .75rem;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.price-row .price {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.btn-add {
+    display: block;
+    background: #10b981;
+    color: white;
+    padding: .7rem;
+    margin-top: 1rem;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-add:hover {
+    background: #0f9d75;
+}
+
+/* --- CATEGORIES --- */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.category-box {
+    background: white;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    color: #111;
+    transition: 0.3s;
+}
+
+.category-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.category-box i {
+    font-size: 2rem;
+    margin-bottom: .5rem;
+}
+
+/* --- VALUE PROPS --- */
+.value-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 2rem;
+    padding: 3rem;
+    background: #f3f4f6;
+    margin-top: 3rem;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.value-box i {
+    font-size: 2rem;
+    margin-bottom: .5rem;
+    color: #4f46e5;
+}
+</style>
+
+{% endblock %}
